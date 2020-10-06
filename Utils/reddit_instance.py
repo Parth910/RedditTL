@@ -7,7 +7,7 @@ def reddit_instance(request):
         t = Auth.objects.get(user=request.user.id)
         reddit = praw.Reddit(client_id="3FjsoKD81_ybSQ",
                              client_secret="PuFL1pa58PQECbgj2lqzTTOsBRw",
-                             redirect_uri="http://localhost:8000/auth",
+                             redirect_uri="https://reddit-tl.herokuapp.com/auth",
                              user_agent="redditTop",
                              refresh_token=t.refresh_token
 
@@ -16,7 +16,7 @@ def reddit_instance(request):
     else:
         reddit = praw.Reddit(client_id="3FjsoKD81_ybSQ",
                              client_secret="PuFL1pa58PQECbgj2lqzTTOsBRw",
-                             redirect_uri="http://localhost:8000/auth",
+                             redirect_uri="https://reddit-tl.herokuapp.com/auth",
                              user_agent="redditTop",
 
                              )
