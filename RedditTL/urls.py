@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from Home.views import reddit_login_view, home_view, get_token_view, delink_reddit
-from User.views import auth_view, subreddit_view, get_subreddit_view, get_post_with_link_view, profile_view
+from User.views import auth_view, subreddit_view, get_subreddit_view, get_post_with_link_view, profile_view, data_fetch
 from Accouts.views import login_view, logout_view, registration_view
 
 urlpatterns = [
@@ -34,5 +34,6 @@ urlpatterns = [
     path('getsubreddit/', get_subreddit_view),
     path('getsubreddit/<str:subreddit_name>', get_post_with_link_view),
     path('profile/', profile_view),
+    path('test/', data_fetch),
 
 ]

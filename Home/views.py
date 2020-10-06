@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from User.models import Auth, Subreddit
+from User.models import Auth, Subreddit, Domain, Author, Post
 from Utils.reddit_instance import reddit_instance
 import random
 
@@ -21,8 +21,12 @@ def reddit_login_view(request, *args, **kwargs):
 
 def delink_reddit(request, *args, **kwargs):
     if request.method == 'GET':
-        red_del = Auth.objects.get(user=request.user.id)
-        red_del.delete()
+        tok_del = Auth.objects.filter(user=request.user.id).delete()
+        dom_del = Domain.objects.filter(user=request.user.id).delete()
+        author_del = Author.objects.filter(user=request.user.id).delete()
+        post_del = Post.objects.filter(user=request.user.id).delete()
+        subred_del = Subreddit.objects.filter(user=request.user.id).delete()
+
         return redirect('/')
 
 

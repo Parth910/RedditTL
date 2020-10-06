@@ -3,15 +3,17 @@
     <h3>Subreddit you have</h3>
 </div>
 <div class="row mt-1" >
+  <div class="card-columns">
     {% for k in response %}
 
-        <div class="col-sm">
+
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">r/{{ k.subreddit }}</h5>
                     <a href="/getsubreddit/{{ k.subreddit }}" class="card-link">Show Details</a>
                 </div>
             </div>
-        </div>
+
     {% endfor %}
+  </div>
 </div>

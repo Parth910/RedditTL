@@ -16,10 +16,11 @@ class Subreddit(models.Model):
 
 class Author(models.Model):
     name = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     @classmethod
-    def create(cls, name):
-        author = cls(name=name)
+    def create(cls, name, user):
+        author = cls(name=name, user=user)
         # do something with the book
         return author
 
@@ -32,6 +33,7 @@ class Post(models.Model):
     post_author = models.ForeignKey(Author, on_delete=models.CASCADE)
     post_text = models.TextField()
     link_contain = models.BooleanField(null=True)
+    url_count = models.IntegerField(null=True)
 
 
 class Domain(models.Model):

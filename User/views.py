@@ -1,4 +1,6 @@
 import json
+import time
+from collections import Counter
 from urllib.parse import urlparse
 
 from urlextract import URLExtract
@@ -18,8 +20,9 @@ def store_token(refresh_token, user):
     token.save()
 
 
-def get_pushshiftdata(sub):
-    url = 'https://api.pushshift.io/reddit/search/submission/?size=1000&subreddit=' + str(sub)
+def get_pushshiftdata(sub, after, before):
+    url = 'https://api.pushshift.io/reddit/search/submission/?after=' + str(after) + '&before=' + str(
+        before) + '&subreddit=' + str(sub)
     r = requests.get(url)
     data = json.loads(r.text)
     return data['data']
@@ -34,7 +37,7 @@ def auth_view(request, *args, **kwargs):
         return redirect('/subreddit')
 
 
-def data_fetch(request):
+def data_fetch(request, *args, **kwargs):
     reddit = reddit_instance(request)
     subreddits = reddit.user.subreddits(limit=None)
     posts = []
@@ -42,7 +45,9 @@ def data_fetch(request):
     for item in subreddits:
         usr = Subreddit(name=item.display_name, user=request.user)
         usr.save()
-        posts = get_pushshiftdata(item.display_name)
+        before = int(time.time())
+        after = int(before - (3600 * 5))
+        posts = get_pushshiftdata(item.display_name, after, before)
         for thing in posts:
             if 'selftext' in thing:
                 if Author.objects.filter(name=thing['author']).exists():
@@ -54,7 +59,7 @@ def data_fetch(request):
                              post_author=z,
                              post_title=thing['title'])
                 else:
-                    authr = Author.create(thing['author'])
+                    authr = Author.create(thing['author'], request.user)
                     authr.save()
                     i = Post(user=request.user,
                              post_id=thing['id'],
@@ -66,6 +71,7 @@ def data_fetch(request):
                 temp.append(i)
 
     Post.objects.bulk_create(temp)
+    return HttpResponse(temp)
 
 
 def subreddit_view(request, *args, **kwargs):
@@ -91,11 +97,13 @@ def link_post(request):
     user_post = Post.objects.filter(user=request.user.id)
     extractor = URLExtract()
     for post in user_post:
-        urls = extractor.find_urls(post.post_text)
+        urls = extractor.find_urls(post.post_text + post.post_title)
+
         if urls:
             post.link_contain = True
+            post.url_count = len(Counter(urls).keys())
 
-    Post.objects.bulk_update(user_post, ['link_contain'])
+    Post.objects.bulk_update(user_post, ['link_contain', 'url_count'])
 
 
 def extract_domain(url, remove_http=True):
@@ -140,30 +148,44 @@ def get_post_with_link_view(request, subreddit_name, *args, **kwargs):
         post_list = [
             {"title": x.post_title, "text": x.post_text, "author": x.post_author.name, "subreddit": x.post_subreddit}
             for x in posts_with_link]
-        count_domain = most_shared_link(request, subreddit_name)
+        count_domain_n = most_shared_link(request, subreddit_name)
         count_author = author_with_most_link(request, subreddit_name, posts_with_link)
         data = {
             "response": post_list,
-            "link_count": count_domain,
+            "link_count": count_domain_n,
             "author_count": count_author
         }
 
         # return JsonResponse(data)
         return render(request, './components/getsubreddit.html', {
             "response": post_list,
-            "link_count": count_domain,
+            "link_count": count_domain_n,
             "author_count": count_author
         })
 
 
-def most_shared_link(request,subreddit_name):
+def most_shared_link(request, subreddit_name):
     domains = Domain.objects.filter(user=request.user.id)
-    count_contain = [{"domain": x.name, "count": Post.objects.filter(domain=x,post_subreddit=subreddit_name).count()} for x in domains]
+    count_contain = [{"domain": x.name, "count": count_domain(subreddit_name, x)}
+                     for x in domains]
     return count_contain
 
 
+def count_domain(subreddit_name , x):
+    posts_d = Post.objects.filter(domain=x, post_subreddit=subreddit_name)
+    extractor = URLExtract()
+    cnt = 0
+    for post in posts_d:
+        urls = extractor.find_urls(post.post_text + post.post_title)
+        for url in urls:
+            if x.name == extract_domain(url):
+                cnt=cnt+1
+
+    return cnt
+
+
 def author_with_most_link(request, subreddit_name, posts):
-    authors = Author.objects.all()
+    authors = Author.objects.filter(user=request.user.id)
     count_contain = [{"author": x.name, "count": validate_user(x.id, posts)} for x in authors]
     f_count = []
     for e in count_contain:
@@ -176,8 +198,7 @@ def author_with_most_link(request, subreddit_name, posts):
 def validate_user(x, posts):
     count = 0
     for post in posts:
-
         if x == post.post_author.id:
-            count = count + 1
+            count = count + post.url_count
 
     return count

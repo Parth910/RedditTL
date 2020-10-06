@@ -25,6 +25,7 @@ SECRET_KEY = 'l2q!)7-60gn)-xb$-lvdah#ep-4e_^pi5gl7824ig^j(o58n(5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -119,7 +120,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URL_REGEX = r'^/api/.*$'
 USE_TZ = True
 LOGIN_URL='/login'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'reddit-tl.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'reddit-tl.herokuapp.com/']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
