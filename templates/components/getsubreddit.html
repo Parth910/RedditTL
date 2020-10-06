@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="container">
+        <!-- Content here -->
+        <nav class="mb-1 navbar navbar-expand-lg rgba-white-strong text-dark">
+            <a class="navbar-brand text-dark font-weight-normal" href="/">Reddit Top Link</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark font-weight-normal" href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+
+        <div class="row mt-5" >
+            <h2>Posts with links</h2>
+
+        </div>
+        {% if response %}
+
+            <div class="card-columns">
+                {% for k in response %}
+                    <div class="card">
+                        <div class="card-header" style="background-color: #ff4500 ">
+                            r/{{ k.subreddit }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" >{{ k.title }}</h5>
+                            <p class="card-text"> {{ k.text }}</p>
+                            <p class="card-text"><small class="text-muted">{{ k.author }}</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div>
+                <h4>Opps there is no links in  post.....</h4>
+            </div>
+        {% endif %}
+
+        <div class="row mt-5" >
+            <h2>Domains with share count</h2>
+
+        </div>
+        {% if link_count %}
+            <div class="card-columns">
+            {% for k in link_count %}
+                {% if k.count != 0 %}
+                    <div class="card">
+                        <div class="card-header  indigo" >
+                            {{ k.domain }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ k.count  }}</h5>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div>
+            <h4>Opps there is no Domain share in subreddit.....</h4>
+            </div>
+
+        {% endif %}
+        </div>
+        <div class="row mt-5" >
+            <h2>Users with most links</h2>
+
+        </div>
+        {% if author_count %}
+            <div class="card-columns">
+            {% for k in author_count %}
+                {% if k.count != 0 %}
+                    <div class="card">
+                        <div class="card-header cyan accent-3">
+                            u/{{ k.author }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ k.count  }}</h5>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h4>Opps there is no Domain share in subreddit.....</h4>
+
+        {% endif %}
+        </div>
+    </div>
+{% endblock content %}

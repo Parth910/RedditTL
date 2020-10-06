@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <nav class="mb-1 navbar navbar-expand-lg rgba-white-strong text-dark">
+            <a class="navbar-brand text-dark font-weight-normal" href="/">Reddit Top Link</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark font-weight-normal" href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron text-center">
+
+            <!-- Title -->
+            <h2 class="card-title h2 font-weight-bold" style="color: #ff4500">Welcome Back.. !</h2>
+            <!-- Subtitle -->
+            <div class="row justify-content-center mt-5" >
+                <div class="col-8">
+                    <form method="POST"> {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn btn-light text-dark" style="text-align: center" >Login</button><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

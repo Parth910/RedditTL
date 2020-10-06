@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <nav class="mb-1 navbar navbar-expand-lg rgba-white-strong text-dark">
+        <a class="navbar-brand text-dark font-weight-normal" href="/">Reddit Top Link</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link text-dark font-weight-normal" href="/">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+
+
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
+    <div class="row mt-5" id="subreddit">
+
+
+
+        <div class="card col" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">Welcome {{ response }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

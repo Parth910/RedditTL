@@ -1,0 +1,52 @@
+
+
+{% if authenticated %}
+
+    {% if redditlink %}
+        {% include "components/subreddit.html" %}
+    {% else %}
+        <div class="jumbotron text-center mt-5 rgba-white-strong">
+
+            <!-- Title -->
+            <h2 class="card-title h2">Welcome to Reddit Top link</h2>
+            <!-- Subtitle -->
+            <p class="blue-text my-4 font-weight-bold">Looks like you haven't link your reddit account!!  </p>
+
+            <div class="pt-2">
+                <a type="button" class="btn btn-blue waves-effect" style="background-color: #ff4500 !important;" href="/redditlink">Link Reddit </a>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+{% else %}
+    <div class="jumbotron text-center mt-5 rgba-white-strong">
+
+        <!-- Title -->
+        <h2 class="card-title h2">Welcome to Reddit Top link</h2>
+        <!-- Subtitle -->
+        <p class="blue-text my-4 font-weight-bold">Analyze subreddit submissions  </p>
+
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+
+                <p class="card-text">Developed using Django and Praw with <i class="fas fa-heart "></i></p>
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+        <hr class="my-4">
+
+        <div class="pt-2">
+            <a type="button" class="btn btn-blue waves-effect" style="background-color: #ff4500 !important;" href="/login">Login </a>
+            <a type="button" class="btn btn-blue waves-effect" href="/register">Register </a>
+        </div>
+
+    </div>
+{% endif %}

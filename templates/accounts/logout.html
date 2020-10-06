@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <nav class="mb-1 navbar navbar-expand-lg rgba-white-strong text-dark">
+            <a class="navbar-brand text-dark font-weight-normal" href="/">Reddit Top Link</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark font-weight-normal" href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+        <div class="row justify-content-center mt-5" >
+            <div class="col-4">
+                <h3>Really want to logout?</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-1" >
+            <div class="col-4">
+                <form method="POST"> {% csrf_token %}
+
+                    <button type="submit" class="btn btn-secondary" style="text-align: center" >Yes</button>
+                    <a class="btn btn-primary" href="/" role="button">No</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
