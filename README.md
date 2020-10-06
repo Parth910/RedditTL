@@ -90,7 +90,7 @@ This app is hosted on Heroku at [Here](https://reddit-tl.herokuapp.com/)
 * Limit the first line to 72 characters or less
 * Reference issues and pull requests liberally after the first line
 
-#### JavaScript Styleguide
+#### Python Styleguide
 
 * All Python must adhere to Python Standard Style.
 #### Git Issues and Pull request
