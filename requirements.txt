@@ -2,5 +2,5 @@ Django~=3.1.2
 praw~=7.1.0
 requests~=2.24.0
 urlextract~=1.1.0
-whitenoice~=5.2.0
+whitenoice<=5.2.0
 gunicorn~=20.0.4
