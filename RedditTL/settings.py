@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-STATIC_ROOT = [BASE_DIR / 'staticfiles']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -126,3 +126,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'reddit-tl.herokuapp.com/']
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = [BASE_DIR/'staticfiles']
+STATICFILES_DIRS = [
+    BASE_DIR/'static'),
+]
