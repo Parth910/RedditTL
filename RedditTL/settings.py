@@ -127,6 +127,4 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'reddit-tl.herokuapp.com/']
 
 STATIC_URL = '/static/'
 STATIC_ROOT = [BASE_DIR/'staticfiles']
-STATICFILES_DIRS = [
-    BASE_DIR/'static'),
-]
+STATICFILES_DIRS = [BASE_DIR/'static']
