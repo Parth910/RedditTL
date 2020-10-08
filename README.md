@@ -65,6 +65,8 @@ Author Model
 
 First you have to register yourself with app. After registration you have to link reddit account with app(you can delink also), after linking you can visit home page for your subreddits information.
 
+##(if there is some application error occurs please go to the home page and delink your Reddit and try to relink your reddit account )
+
 ### Live demo
 This app is hosted on Heroku at [Here](https://reddit-tl.herokuapp.com/)
 
